@@ -1,0 +1,8 @@
+En el fichero /usr/local/share/oaw/oaw/portal/src/main/java/es/gob/oaw/basicservice/BasicServiceManager.java
+Hay una clase que falla al compilar con maven. Se comenta la línea que falla y se marca con //jacin
+
+En ./dependencias hay varios xml. Se podrian haber pasado al oaw.tar.gz, pero se deja así para que se sepan cuales eran.
+Por si alguien quiere coger los fuentes del github.
+
+En build_oaw.sh también se modifican xmls.
+

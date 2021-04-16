@@ -1,0 +1,37 @@
+#docker
+mkdir -p /etc/systemd/system/docker.service.d/
+sudo nano /etc/systemd/system/docker.service.d/http-proxy.conf
+
+[Service]
+Environment="HTTP_PROXY=http://10.1.0.222:8080/"
+Environment="HTTPS_PROXY=http://10.1.0.222:8080/"
+
+sudo mkdir -p /root/.docker
+sudo nano /root/.docker/config.json
+
+{
+  "proxies": {
+    "default": {
+      "httpProxy": "http://10.1.0.222:8080/",
+      "httpsProxy":  "http://10.1.0.222:8080/"
+    }
+  }
+}
+
+
+
+sudo systemd daemon-reload
+sudo systemd restart docker
+
+
+/usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml
+    <proxy>
+      <id>MAETD</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>10.1.0.222</host>
+      <port>8080</port>
+    </proxy>
+</proxies>
+
+
