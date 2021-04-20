@@ -887,13 +887,13 @@ listaFuncionesPasos=(
 createDirInstall
 detectPackageInstaller
 copyOawSourceFiles
-javaInstall
-apacheTomcatInstall
-apacheMavenInstall
 mariadbInstall
 createAdminMariadb
 createStructureDbOaw
 createUserApplicationOaw
+javaInstall
+apacheTomcatInstall
+apacheMavenInstall
 alienInstall
 dockerDependency
 dockerInstall
@@ -912,17 +912,20 @@ endInstallation
 createDirInstall_stepNum=0					#debe ser el 0
 detectPackageInstaller_stepNum=1			#debe ser el 1
 
-#Source files, java tomcat and maven
+#Source files
 copyOawSourceFiles_stepNum=2
-javaInstall_stepNum=3
-apacheTomcatInstall_stepNum=4
-apacheMavenInstall_stepNum=5
 
 #db
-mariadbInstall_stepNum=6
-createAdminMariadb_stepNum=7
-createStructureDbOaw_stepNum=8
-createUserApplicationOaw_stepNum=9
+mariadbInstall_stepNum=3
+createAdminMariadb_stepNum=4
+createStructureDbOaw_stepNum=5
+createUserApplicationOaw_stepNum=6
+
+#java, tomcat, maven
+javaInstall_stepNum=7
+apacheTomcatInstall_stepNum=8
+apacheMavenInstall_stepNum=9
+
 
 #docker
 alienInstall_stepNum=10
@@ -965,6 +968,8 @@ if [ $# -gt 1 ]; then
 	if [ $# -eq 2 ] && [ "$2" == "resume" ]; then
 		if [ -e $lastErrorFile ]; then
 			step=$(cat $lastErrorFile)
+		else
+			step=0
 		fi
 		
 	else
@@ -985,13 +990,10 @@ if [ $# -gt 1 ]; then
 			echo "Parameter step number incorrect. Must be a number between 0 and $totalSteps."
 			ayuda
 		fi
+		step="$3"
 	fi
 	command="$2"
 
-	#el step lo puede establecer el resume. Si no está establecido cogemos de la línea de parámetros
-	if [ -z "$step" ]; then
-		step="$3"
-	fi
 	
 fi
 
