@@ -116,8 +116,8 @@ cat > /root/.docker/config.json <<EOF
 EOF
 let ret=$ret+$?
 if [ $ret -eq 0 ]; then
-    systemd daemon-reload
-    systemd restart docker
+    systemctl daemon-reload
+    systemctl restart docker
 else
     echo "$msgError2"
     exit -1
@@ -131,7 +131,7 @@ if [ ! -e "/usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml.back" ]; th
     mv "/usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml" "/usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml.back" 
     let ret=$ret+$?
 fi
-if [ $ret -ne 0 ]; then
+if [ $ret -eq 0 ]; then
     cadenaInsertar="\ \ \ \ <proxy>\n      <id>oaw</id>\n      <active>true</active>\n      <protocol>http</protocol>\n      <host>$proxyHost</host>\n      <port>$proxyPort</port>\n    </proxy>\n"
     sed "/^  <proxies>/a $cadenaInsertar" /usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml.back > /usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml
     let ret=$ret+$?

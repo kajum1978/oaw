@@ -20,8 +20,8 @@ sudo nano /root/.docker/config.json
 
 
 
-sudo systemd daemon-reload
-sudo systemd restart docker
+sudo systectl daemon-reload
+sudo systemdctl restart docker
 
 
 /usr/local/share/oaw/apache-maven-3.6.3/conf/settings.xml
