@@ -848,7 +848,8 @@ function executeSteps(){
 		fi
 		while [ $step -lt $totalSteps ]; do
 			#nos apuntamos el paso que estamos haciendo
-			echo "$step" > $lastErrorFile
+			rm -f "$lastErrorFile"  #se borra así porque no ejecuta bien el siguiente "echo" con sudo
+			echo "$step" > "$lastErrorFile"
 			${listaFuncionesPasos[$step]}
 			let step=$step+1
 		done
@@ -967,8 +968,8 @@ if [ $# -gt 1 ]; then
 	#resume desde donde dió el error
 	#install.sh es resume
 	if [ $# -eq 2 ] && [ "$2" == "resume" ]; then
-		if [ -e $lastErrorFile ]; then
-			step=$(cat $lastErrorFile)
+		if [ -e "$lastErrorFile" ]; then
+			step=$(cat "$lastErrorFile")
 		else
 			step=0
 		fi
