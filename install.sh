@@ -120,7 +120,7 @@ function setLanguaje(){
 		msgInfo_askForUserPasswordDb_1="Se debe utilizar otro nombre de usuario distinto de root."
 
 		msgQuestion1="¿ip Dns exterior?, si no sabes establece una de google 8.8.8.8: "
-		msgQuestion2="Son los datos correctos [y/n]: "
+		msgQuestion2="Son los datos correctos (y|n): "
 		msgQuestion3="¿nombre de administrador para mariadb-server? "
 		msgQuestion4="¿password administrador para mariadb-server? "
 		msgQuestion5="¿quieres instalar la estructura de la base de datos de la aplicación en español o en inglés [es/en]? "
@@ -212,7 +212,7 @@ function setLanguaje(){
 		msgInfo_askForUserPasswordDb_1="A username other than root must be used."
 
 		msgQuestion1="IP Dns exterior ?, if you do not know, set one of google 8.8.8.8: "
-		msgQuestion2="Is data correct? [y/n]: "
+		msgQuestion2="Is data correct? (y|n): "
 		msgQuestion3="Administrator user for mariadb-server? "
 		msgQuestion4="Administrator user for mariadb-server? "
 		msgQuestion5="do you want to install application database structure in Spanish or English [es/en]? "
@@ -995,8 +995,27 @@ if [ $# -gt 1 ]; then
 		step="$3"
 	fi
 	command="$2"
+else
+	#nos han ejecutado normal ./install.sh es, pero ha habido una ejecución anterior fallida. ¿Preguntamos si quiere ejecutar desde el fallo?
+	if [ -e "$lastErrorFile" ]; then
+		
+		if [ $lang == "es" ]; then
+			preguntaResumir="Hay una ejecución anterior. ¿Quieres ejecutar desde donde falló? (y|n): "
+		else 
+			preguntaResumir="There is a previous execution. Do you want to run from where it failed? (y|n): "
+		fi
 
-	
+		quieresResumir=""
+		while [ "$quieresResumir" != 'n' ] && [ "$quieresResumir" != 'y' ]; do
+			echo -n "$preguntaResumir" ; read quieresResumir
+		done
+
+		if [ "$quieresResumir" == 'y' ]; then
+			#cargamos el paso
+			step=$(cat "$lastErrorFile")
+			command="resume" #para que lo coja la función executeSteps, y ejecute desde el paso
+		fi
+	fi
 fi
 
 #establecemos el lenguaje de los mensajes, errores, etc
