@@ -123,7 +123,7 @@ function setLanguaje(){
 		msgQuestion2="Son los datos correctos (y|n): "
 		msgQuestion3="¿nombre de administrador para mariadb-server? "
 		msgQuestion4="¿password administrador para mariadb-server? "
-		msgQuestion5="¿quieres instalar la estructura de la base de datos de la aplicación en español o en inglés [es/en]? "
+		msgQuestion5="¿quieres instalar la estructura de la base de datos de la aplicación en español o en inglés (es|en)? "
 		
 	elif [ "$lang" == "en" ]; then
 		createDirInstall_msgError_1="Error step ${createDirInstall_stepNum} 1/2: Installation directory already exists $baseDir"
@@ -215,7 +215,7 @@ function setLanguaje(){
 		msgQuestion2="Is data correct? (y|n): "
 		msgQuestion3="Administrator user for mariadb-server? "
 		msgQuestion4="Administrator user for mariadb-server? "
-		msgQuestion5="do you want to install application database structure in Spanish or English [es/en]? "
+		msgQuestion5="do you want to install application database structure in Spanish or English (es|en)? "
 	fi
 }
 
@@ -840,21 +840,9 @@ function endInstallation(){
 
 #Ejecución de los pasos
 function executeSteps(){
-	
-	if [ "$command" == "resume" ]; then
-		if [ $step -gt 1 ]; then
-			#este se va a necesitar casi siempre para saber cual es el gestor de paquetes. Se ejecuta en modo silencioso.
-			detectPackageInstaller "True"
-		fi
-		while [ $step -lt $totalSteps ]; do
-			#nos apuntamos el paso que estamos haciendo
-			rm -f "$lastErrorFile"  #se borra así porque no ejecuta bien el siguiente "echo" con sudo
-			echo "$step" > "$lastErrorFile"
-			${listaFuncionesPasos[$step]}
-			let step=$step+1
-		done
-	
-	elif [ "$command" == "execute" ]; then
+
+	#si es un execute, ejecutaremos sólo ese paso y saldremos
+	if [ "$command" == "execute" ]; then
 		if [ $step -gt 1 ]; then
 			#este se va a necesitar casi siempre para saber cual es el gestor de paquetes. Se ejecuta en modo silencioso.
 			detectPackageInstaller "True"
@@ -862,10 +850,21 @@ function executeSteps(){
 		#paso en concreto
 		${listaFuncionesPasos[$step]}
 	else
-		#todos los pasos
-		for numStep in "${listaFuncionesPasos[@]}"; do
-			$numStep
+		#si es un resume, la variable $step estará informada, sino la variable $step tendrá 0 y se ejecutaran todos los pasos
+		if [ "$command" == "resume" ]; then
+			if [ $step -gt 1 ]; then
+				#este se va a necesitar casi siempre para saber cual es el gestor de paquetes. Se ejecuta en modo silencioso.
+				detectPackageInstaller "True"
+			fi
+		fi
+		while [ $step -lt $totalSteps ]; do
+			#nos apuntamos el paso que estamos haciendo
+			echo "$step" > "$lastErrorFile"
+			#ejecutamos el paso
+			${listaFuncionesPasos[$step]}
+			let step=$step+1
 		done
+		
 	fi
 }
 
@@ -956,7 +955,7 @@ if [ -z "$1" ] || [ "$1" != "es" -a "$1" != "en" ]; then
 fi 
 
 lang="$1"
-step=""
+step=0
 command=""
 
 #$2 puede ser resume o execute y $3 un número (el número de paso desde o a ejecutar)
