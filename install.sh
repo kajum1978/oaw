@@ -49,9 +49,10 @@ function setLanguaje(){
 		checkDockerComposeVersion_msgError_1="Error paso ${checkDockerComposeVersion_stepNum}: Versión de docker-compose incorrecta. Debe ser 1.23.2."
 		configureIpDns_msgError_1="Error paso ${configureIpDns_stepNum}: Fallo al modificar el fichero ${baseDir}/oaw/motor-js/nginx/reverse.conf"
 		executeDockerCompose_msgError_1="Error paso ${executeDockerCompose_stepNum}: Fallo al ejecutar el comando: docker-compose up -d"
-		executeDockerCompose_msgError_2="               Tienes un proxy?"
-		executeDockerCompose_msgError_3="               ejecuta: sudo ./configure_proxy.sh es"
-		executeDockerCompose_msgError_4="               después: sudo ./install.sh es resume"
+		executeDockerCompose_msgError_2="               ¿Tienes al menos tres CPUs disponibles?"
+		executeDockerCompose_msgError_3="               ¿Tienes un proxy?"
+		executeDockerCompose_msgError_4="               ejecuta: sudo ./configure_proxy.sh es"
+		executeDockerCompose_msgError_5="               después: sudo ./install.sh es resume"
 		mariadbInstall_msgError_1="Error paso ${mariadbInstall_stepNum}: Fallo al instalar mariadb-server"
 		createAdminMariadb_msgError_1="Error paso ${createAdminMariadb_stepNum}: Error al crear el usuario administrador en mariadb-server"
 		createStructureDbOaw_msgError_1="Error paso ${createStructureDbOaw_stepNum}: Error al crear la estructura de la base de datos en la bd OAW."
@@ -140,9 +141,10 @@ function setLanguaje(){
 		checkDockerComposeVersion_msgError_1="Error step ${checkDockerComposeVersion_stepNum}: Wrong docker-compose version. Must be 1.23.2."
 		configureIpDns_msgError_1="Error step ${configureIpDns_stepNum}: Failed to modify the file ${baseDir}/oaw/motor-js/nginx/reverse.conf"
 		executeDockerCompose_msgError_1="Error step ${executeDockerCompose_stepNum}: Failed to execute command: docker-compose up -d"
-		executeDockerCompose_msgError_2="               Do you have a proxy?"
-		executeDockerCompose_msgError_3="               execute: sudo ./configure_proxy.sh en"
-		executeDockerCompose_msgError_4="               next: sudo ./install.sh en resume"
+		executeDockerCompose_msgError_2="               Do you have at least 3 CPUs available?"
+		executeDockerCompose_msgError_3="               Do you have a proxy?"
+		executeDockerCompose_msgError_4="               execute: sudo ./configure_proxy.sh en"
+		executeDockerCompose_msgError_5="               next: sudo ./install.sh en resume"
 		mariadbInstall_msgError_1="Error step ${mariadbInstall_stepNum}: Failed to install mariadb-server"
 		createAdminMariadb_msgError_1="Error step ${createAdminMariadb_stepNum}: Error creating administrator user in mariadb-server"
 		createStructureDbOaw_msgError_1="Error step ${createStructureDbOaw_stepNum}: Error creating database structure in OAW db."
@@ -493,6 +495,7 @@ function executeDockerCompose(){
 		echo "$executeDockerCompose_msgError_2"
 		echo "$executeDockerCompose_msgError_3"
 		echo "$executeDockerCompose_msgError_4"
+		echo "$executeDockerCompose_msgError_5"
 		exit -1
 	fi
 }
@@ -825,7 +828,7 @@ function prepareForCompilation(){
 }
 
 function endInstallation(){
-	echo "$endInstallation_msgInfo_1"
+	infoCabecera "$endInstallation_msgInfo_1"
 	echo "$endInstallation_msgInfo_2"
 	echo "$endInstallation_msgInfo_3"
 	echo "$endInstallation_msgInfo_4"
@@ -835,9 +838,7 @@ function endInstallation(){
 	echo "$endInstallation_msgInfo_8"
 }
 
-
-#quiero quitar la database anonymous y poner que root solo se pueda conectar desde localhost
-
+#Ejecución de los pasos
 function executeSteps(){
 	
 	if [ "$command" == "resume" ]; then
@@ -879,7 +880,7 @@ binaryDir="/usr/local/bin"
 #environment vars
 envFile="/etc/profile.d/oaw-env.sh"
 
-lastErrorFile=".lastErrorInstall"
+lastErrorFile="${iniDir}/.lastErrorInstall"
 
 #array de funciones para ejecutar los pasos
 #orden de los pasos a ejecutar
