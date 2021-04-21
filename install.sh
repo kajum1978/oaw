@@ -221,6 +221,8 @@ function setLanguaje(){
 
 #Para hacer los mensajes más visibles.
 function infoCabecera(){
+	echo 
+	echo
 	echo "*****************************************************************************"
 	echo "$1"
 	echo "*****************************************************************************"

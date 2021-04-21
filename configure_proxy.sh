@@ -27,7 +27,7 @@ function setLanguaje(){
 
         msgQuestion1="¿Proxy para peticiones http:? ejemplo: http://10.1.0.222:8080/    : " 
         msgQuestion2="¿Proxy para peticiones https:? ejemplo: http://10.1.0.222:8080/   : "
-        msgQuestion3="¿Son los datos correctos? y/n: "
+        msgQuestion3="¿Son los datos correctos? (y|n): "
 
     elif [ "$lang" == "en" ]; then
        msgInfo1="Configuración del proxy para instalar oaw."
@@ -46,7 +46,7 @@ function setLanguaje(){
 
         msgQuestion1="¿Proxy para peticiones http:? ejemplo: http://10.1.0.222:8080/    : " 
         msgQuestion2="¿Proxy para peticiones https:? ejemplo: http://10.1.0.222:8080/   : "
-        msgQuestion3="¿Son los datos correctos? y/n: "
+        msgQuestion3="¿Son los datos correctos? (y|n): "
     fi
 }
 

@@ -27,19 +27,19 @@ lang="$1"
 if [ "$lang" == "es" ]; then
 	echo "El siguiente script compila la aplicación y copia el fichero 'oaw.war' generado al directorio webapps del tomcat"
 	echo "Si existe el fichero 'owa.war' en este direcorio será borrado."
-	echo -n "¿Quiere continuar [y/n]? "
+	echo -n "¿Quiere continuar (y|n)? "
 elif [ "$lang" == "en" ]; then
 	echo "The next script compile the application and copy the file 'owa.war' generated into the tomcat's webapps directory."
 	echo "If the file 'owa.war' exists in this directory, it will be deleted."
-	echo -n "Do you want to continue [y/n]? "
+	echo -n "Do you want to continue (y|n)? "
 
 fi
 read continuar
 while [ "$continuar" != "y" ] && [ "$continuar" != "n" ]; do 
 	if [ "$lang" == "es" ]; then
-		echo -n "¿Quiere continuar [y/n]? "
+		echo -n "¿Quiere continuar (y|n)? "
 	elif [ "$lang" == "en" ]; then
-		echo -n "Do you want to continue [y/n]? "
+		echo -n "Do you want to continue (y|n)? "
 	fi
 	read continuar
 done
