@@ -108,8 +108,8 @@ cat > /root/.docker/config.json <<EOF
 {
   "proxies": {
     "default": {
-      "httpProxy": "http://10.1.0.222:8080/",
-      "httpsProxy":  "http://10.1.0.222:8080/"
+      "httpProxy": "$proxyHttp",
+      "httpsProxy":  "$proxyHttps"
     }
   }
 }
