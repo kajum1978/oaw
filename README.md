@@ -3,31 +3,26 @@
 Important: You need at least 3 CPUs
 
 1- Download repository and extract to a directory. You can use git clone.
-	sudo apt-get install git git-lfs
-	git clone https://github.com/kajum1978/oaw.git
+* **sudo apt-get install git git-lfs**
+* **git clone https://github.com/kajum1978/oaw.git**
 
-2- In the directory execute one:
-* sudo ./install.sh es    #for Spanish language
-* sudo ./install.sh en    #for English language
+2- At directory execute one:
+* **sudo ./install.sh (es|en)**
 
-3- Ask the questions for the install.sh script. If a step fail, you can relaunch with:
-    * sudo ./install.sh es resume [step failed]     example: sudo ./install.sh es resume  or  sudo ./install.sh es resume 6
-        or
-    * sudo ./install.sh en resume [step failed]     example: sudo ./install.sh en resume  or  sudo ./install.sh en resume 6
+3- Ask the questions for the install.sh script. If a step fail you can relaunch it (script answer you if you want to resume), or:
+* **sudo ./install.sh (es|en) resume [step failed]**
     
     Note: you can execute one step individually with:
-        sudo ./install es execute (step do you want) example: sudo ./install.sh es execute 8
-            or
-        sudo ./install en execute (step do you want) example: sudo ./install.sh es execute 8
+* **sudo ./install (es|en) execute (step do you want)** 
+            
+4- Optional: After install, you should configure project properties files. They are in /usr/local/share/oaw/customMaven.
 
-4- Optional: After install, you should configure project properties files. They are in /usr/local/share/oaw/customMaven
-   In the Directory /usr/local/share/oaw/oaw there are the source files used for compile the proyect.
+    Note: At Directory /usr/local/share/oaw/oaw there are the source files used for compile the project.
 
 5- Execute one:
-  * sudo build_oaw.sh es   #for Spanish language
-  * sudo build_oaw.sh en   #for English language
+  * **sudo ./build_oaw.sh es**
     
 6- Start oaw execute:
-  * sudo start_oaw.sh
+  * **sudo ./start_oaw.sh**
     
 7- Go to web browser to http://localhost:8080/oaw
